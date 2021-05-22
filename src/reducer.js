@@ -1,7 +1,6 @@
 //reducers are pure functions
 import * as actionTypes from './actionTypes';
 
-
 let lastId = 0;
 
 export default function reducer(state = [], action) {
@@ -12,11 +11,18 @@ export default function reducer(state = [], action) {
                 {
                     id: ++lastId,
                     description: action.payload.description,
-                    removed: false
+                    resolved: false
                 }
             ];
+
         case  actionTypes.BUG_REMOVED:
             return state.filter(bug => bug.id !== action.payload.id);
+
+        case actionTypes.BUG_RESOLVED:
+            return state.map(bug => 
+                bug.id !== action.payload.id ? bug : {...bug, resolved: true}
+            );
+
         default:
             return state;
     }    
