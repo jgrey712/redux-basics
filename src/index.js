@@ -1,5 +1,5 @@
 import store from './store';
-import * as actionTypes from './actionTypes';
+import { bugAdded, bugRemoved } from './actions';
 
 //console.log(store);
 
@@ -11,22 +11,12 @@ const unscubscribe = store.subscribe(() => {
     console.log("store updated", store.getState());
 });
 
-store.dispatch({
-    type: actionTypes.BUG_ADDED,
-    payload: {
-        description: "Bug 1"
-    }
-});
+store.dispatch(bugAdded("Bug 1 added"));
 
 console.log(store.getState());
 
 unscubscribe();
 
-store.dispatch({
-    type: actionTypes.BUG_REMOVED,
-    payload: {
-        id: 1
-    }
-});
+store.dispatch(bugRemoved(1));
 
 console.log(store.getState()); //u only just dont get notified. Things will still happen!
