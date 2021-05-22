@@ -1,3 +1,5 @@
+//reducers are pure functions
+
 let lastId = 0;
 
 function reducer(state = [], action) {
