@@ -1,4 +1,4 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAction, createReducer } from '@reduxjs/toolkit';
 
 /*const bugUpdated = createAction("bugUpdated"); //bugUpdated is the action type
 console.log(bugUpdated({id:1})); //payload
@@ -13,27 +13,24 @@ export const bugRemoved = createAction("bugRemoved");
 // Reducer has to be default module in ducks pattern
 let lastId = 0;
 
-export default function reducer(state = [], action) {
-    switch(action.type) {
-        case bugAdded.type:
-            return [
-                ...state,
-                {
-                    id: ++lastId,
-                    description: action.payload.description,
-                    resolved: false
-                }
-            ];
+//createReducer(initial_state, obj that map actions to functions that handle those actions)
+export default createReducer([], {
+    //key : value
+    //actions: functions (event => event handler)
+    [bugAdded.type]: (state, action) => {
+        state.push({
+            id: ++lastId,
+            description: action.payload.description,
+            resolved: false
+        }); //immer under the hood
+    },
 
-        case bugRemoved.type:
-            return state.filter(bug => bug.id !== action.payload.id);
+    [bugResolved.type]: (bugs, action) => { //can be state/bugs/any variable
+        const index = bugs.findIndex(bug =>bug.id === action.payload.id);
+        bugs[index].resolved = true;
+    },
 
-        case bugResolved.type:
-            return state.map(bug => 
-                bug.id !== action.payload.id ? bug : {...bug, resolved: true}
-            );
-
-        default:
-            return state;
-    }    
-}
+    [bugRemoved.type]: (state, action) => {
+        return state.filter(bug => bug.id !== action.payload.id)
+    }
+});
