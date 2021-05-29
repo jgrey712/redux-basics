@@ -1,5 +1,5 @@
 import configureStore from './store/configureStore';
-import { bugAdded, bugRemoved, bugResolved } from './store/bugs';
+import { bugAdded, bugRemoved, bugResolved, unresolvedBugsSelector } from './store/bugs';
 import { projectAdded } from './store/projects';
 
 const store = configureStore();
@@ -16,6 +16,9 @@ store.dispatch(bugAdded({description: "Bug 3 added"}));
 store.dispatch(bugResolved({id:1}));
 
 console.log(store.getState());
+
+const unresolvedBugs = unresolvedBugsSelector(store.getState());
+console.log("unresolved: ", unresolvedBugs);
 
 unscubscribe();
 
