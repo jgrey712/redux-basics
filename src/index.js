@@ -11,6 +11,8 @@ const unscubscribe = store.subscribe(() => {
 store.dispatch(projectAdded({name: "Project 1"}));
 
 store.dispatch(bugAdded({description: "Bug 1 added"}));
+store.dispatch(bugAdded({description: "Bug 2 added"}));
+store.dispatch(bugAdded({description: "Bug 3 added"}));
 store.dispatch(bugResolved({id:1}));
 
 console.log(store.getState());
