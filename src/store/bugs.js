@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { createSelector } from 'reselect';
 
 let lastId = 0;
 
@@ -29,7 +30,10 @@ const slice = createSlice({
 export const { bugAdded, bugResolved, bugRemoved } = slice.actions;
 export default slice.reducer;
 
-// selector
-// get derived data
-export const unresolvedBugsSelector = state => 
-    state.entities.bugs.filter(bug => !bug.resolved);
+// selector => get derived data
+// memoization => cached data
+export const unresolvedBugsSelector = createSelector(
+    state => state.entities.bugs, //first function, result passed to second fn
+    bugs => bugs.filter(bug => !bug.resolved) //2nd fn => result function, 
+    //if bugs not changes, not executed: return from cache
+);
