@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import reducer from './reducer';
+import logger from './middleware/logger';
 
 export default function() {
     const store = configureStore({
-        reducer: reducer //lhs reducer is from @reduxjs/toolkit, rhs from ./bugs
+        reducer,
+        middleware: [logger]
     });   
     return store;
 };
