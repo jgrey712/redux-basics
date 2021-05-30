@@ -1,6 +1,6 @@
-const func = store =>  next => action => {
+const func = ({dispatch, getstate}) =>  next => action => {
     if (typeof action === 'function') {
-        action();  //call
+        action(dispatch, getstate);  //call
     } else {
         next(action); //pass as arg
     }
