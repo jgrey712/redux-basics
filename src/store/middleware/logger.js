@@ -1,8 +1,5 @@
-const logger = store => next => action => {
-    //next is next fn || reducer
-    console.log('store: ', store); //not same as store (just looks like it)
-    console.log('next: ', next);
-    console.log('action: ', action);
+const logger = param => store => next => action => {
+    console.log('Logging: ', param);
     next(action);
 }
 
