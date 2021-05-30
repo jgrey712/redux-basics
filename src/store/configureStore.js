@@ -1,15 +1,14 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'; //automatically brings redux thunk
 import reducer from './reducer';
 import logger from './middleware/logger';
-import func from './middleware/func';
 
 export default function() {
     const store = configureStore({
         reducer,
         middleware: [
-            logger({destination: 'console'}),
-            func
-        ] //order matters
+            ...getDefaultMiddleware(),
+            logger({destination: 'console'})
+        ]
     });   
     return store;
 };
