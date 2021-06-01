@@ -6,6 +6,6 @@ const store = configureStore();
 store.dispatch(actions.apiCallBegin({
     url: "/bugs",
     method: "get",
-    onSuccess: "bugsReceived",
+    onSuccess: "bugs/bugsReceived",
     onError: actions.apiCallFailed.type
 }));

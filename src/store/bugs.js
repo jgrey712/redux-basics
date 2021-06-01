@@ -12,6 +12,10 @@ const slice = createSlice({
     },
     reducers: {
         //actions => action handlers
+        bugsReceived: (bugs, action) => {
+            bugs.list = action.payload;
+        },
+
         bugAssignedToUser: (bugs, action) => {
             const { bugId, userId } = action.payload;
             const index = bugs.list.findIndex(bug => bug.id === bugId);
