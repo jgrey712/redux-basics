@@ -13,8 +13,18 @@ const slice = createSlice({
     },
     reducers: {
         //actions => action handlers
+        bugsRequestd: (bugs, action) => {
+            bugs.loading = true;
+
+        },
+        
         bugsReceived: (bugs, action) => {
             bugs.list = action.payload;
+            bugs.loading = false;
+        },
+
+        bugsRequestFailed: (bugs, action) => {
+            bugs.loading = false;
         },
 
         bugAssignedToUser: (bugs, action) => {
@@ -42,14 +52,24 @@ const slice = createSlice({
     }//maps actions to action handlers
 });
 
-export const { bugAdded, bugResolved, bugRemoved, bugAssignedToUser, bugsReceived } = slice.actions;
+export const { 
+    bugAdded, 
+    bugResolved, 
+    bugRemoved, 
+    bugAssignedToUser, 
+    bugsReceived, 
+    bugsRequestd,
+    bugsRequestFailed
+} = slice.actions;
 export default slice.reducer;
 
 //action creators
 const url = '/bugs';
 export const loadBugs = () => apiCallBegin({
     url,
-    onSuccess: bugsReceived.type
+    onStart: bugsRequestd.type,
+    onSuccess: bugsReceived.type,
+    onError: bugsRequestFailed.type
 });
 
 // selector => get derived data
