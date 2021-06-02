@@ -51,7 +51,7 @@ const slice = createSlice({
     }//maps actions to action handlers
 });
 
-export const { 
+const { 
     bugAdded, 
     bugResolved, 
     bugRemoved, 
